@@ -2,22 +2,21 @@
 <html lang='pt-BR'>
 <head>
   <meta charset='UTF-8'>
-  <title>Catálogo Arte Sedução</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>Catálogo Pincéis Arte Sedução</title>
   <style>
     html, body {
-      background: #fbe5ee !important;
+      background: #fbe5ee;
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
       width: 100vw;
       min-height: 100vh;
-      box-sizing: border-box;
     }
     .container {
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      min-height: 100vh;
       width: 100vw;
     }
     .interno-catalogo {
@@ -27,10 +26,9 @@
       text-align: center;
       font-size: 28px;
       color: #d60087;
-      padding: 20px 0 8px 0;
+      padding: 20px 0 8px;
       font-weight: bold;
       margin-bottom: 13px;
-      letter-spacing: 0.5px;
     }
     .busca-container {
       text-align: center;
@@ -54,7 +52,6 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 4px 2px;
-      margin: 0 auto;
     }
     .produto {
       background: #fff;
@@ -64,7 +61,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 15px 6px 18px 6px;
+      padding: 15px 6px 18px;
       text-align: center;
       width: 210px;
       height: 365px;
@@ -87,14 +84,11 @@
       color: #d60087;
       min-height: 44px;
       max-height: 48px;
-      margin: 0 0 10px 0;
-      line-height: 1.17em;
+      margin-bottom: 10px;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
-      word-break: break-word;
-      text-align: center;
     }
     .preco {
       font-size: 16px;
@@ -108,11 +102,12 @@
       font-family: 'Courier New', Courier, monospace;
       text-align: center;
       margin-bottom: 4px;
-      word-break: break-all;
+      word-break: break-word;
     }
     input[type='number'] {
       width: 60px;
       padding: 4px;
+      font-size: 16px;
     }
     button {
       background: #d60087;
@@ -156,10 +151,11 @@
 <body>
   <div class='container'>
     <div class='interno-catalogo'>
-      <div class='titulo-catalogo'>Catálogo Arte Sedução</div>
+      <div class='titulo-catalogo'>Catálogo Pincéis Arte Sedução</div>
       <div class="busca-container">
         <input type="text" id="busca" placeholder="Pesquisar por nome, SKU ou EAN..." onkeyup="filtrarProdutos()">
       </div>
+
 <div class='categoria-titulo'>Pincéis Arte Sedução</div><div class='produtos'>
         <div class='produto' data-nome="pincel carga dupla one stroke 4 reto, arte sedução" data-sku="pi-osr-01" data-ean="7898951285392">
           <img src='https://static.wixstatic.com/media/601292_209cf9ba1d3b443ba97b34299d6fb9c7~mv2.jpg' alt='PI-OSR-01'>
@@ -8450,73 +8446,70 @@ Kit Barbeiro Cabeleireiro Pente Navalhete Tesouras Aço Inox Cor:Preto', 92.736,
           </div>
         </div>
         </div>
-    </div>
-  </div>
-  <div id="pedido">
-    <h3>Meu Pedido</h3>
-    <ul id="lista-pedido"></ul>
-    <p>Total: R$ <span id="total">0,00</span></p>
-    <button onclick="copiarPedido()">Copiar pedido</button>
-  </div>
-  <script>
-    const pedido = {};
-    function adicionarAoPedido(sku, ean, nome, preco, inputId) {
-      const qtd = parseInt(document.getElementById(inputId).value);
-      if (!qtd || qtd <= 0) return alert("Informe uma quantidade válida.");
-      if (!pedido[sku]) {
-        pedido[sku] = { nome, preco, quantidade: qtd, ean };
-      } else {
-        pedido[sku].quantidade += qtd;
-      }
-      atualizarPedido();
-      document.getElementById(inputId).value = "";
+</div>
+</div>
+<div id="pedido">
+  <h3>Meu Pedido</h3>
+  <ul id="lista-pedido"></ul>
+  <p>Total: R$ <span id="total">0,00</span></p>
+  <button onclick="copiarPedido()">Copiar pedido</button>
+</div>
+<script>
+const pedido = {};
+function adicionarAoPedido(sku, ean, nome, preco, inputId) {
+  const qtd = parseInt(document.getElementById(inputId).value);
+  if (!qtd || qtd <= 0) return alert("Informe uma quantidade válida.");
+  if (!pedido[sku]) {
+    pedido[sku] = { nome, preco, quantidade: qtd };
+  } else {
+    pedido[sku].quantidade += qtd;
+  }
+  atualizarPedido();
+  document.getElementById(inputId).value = "";
+}
+function atualizarPedido() {
+  const lista = document.getElementById("lista-pedido");
+  const totalSpan = document.getElementById("total");
+  lista.innerHTML = "";
+  let total = 0;
+  for (const sku in pedido) {
+    const item = pedido[sku];
+    const subtotal = item.quantidade * item.preco;
+    total += subtotal;
+    const li = document.createElement("li");
+    li.textContent = `${item.quantidade}x [${sku}] ${item.nome}`;
+    lista.appendChild(li);
+  }
+  totalSpan.textContent = total.toFixed(2).replace('.', ',');
+}
+function copiarPedido() {
+  let texto = "Pedido Arte Sedução:\n\n";
+  let total = 0;
+  for (const sku in pedido) {
+    const item = pedido[sku];
+    const subtotal = item.quantidade * item.preco;
+    total += subtotal;
+    texto += `- ${item.quantidade}x [${sku}] ${item.nome}\n`;
+  }
+  texto += `\nTotal: R$ ${total.toFixed(2).replace('.', ',')}`;
+  navigator.clipboard.writeText(texto)
+    .then(() => alert("Pedido copiado com sucesso!"))
+    .catch(() => alert("Erro ao copiar pedido."));
+}
+function filtrarProdutos() {
+  const input = document.getElementById("busca").value.toLowerCase();
+  const produtos = document.querySelectorAll(".produto");
+  produtos.forEach(prod => {
+    const nome = prod.dataset.nome;
+    const sku = prod.dataset.sku;
+    const ean = prod.dataset.ean;
+    if (nome.includes(input) || sku.includes(input) || ean.includes(input)) {
+      prod.style.display = "flex";
+    } else {
+      prod.style.display = "none";
     }
-
-    function atualizarPedido() {
-      const lista = document.getElementById("lista-pedido");
-      const totalSpan = document.getElementById("total");
-      lista.innerHTML = "";
-      let total = 0;
-      for (const sku in pedido) {
-        const item = pedido[sku];
-        const subtotal = item.quantidade * item.preco;
-        total += subtotal;
-        const li = document.createElement("li");
-        li.textContent = `${item.quantidade}x [${sku}] ${item.nome} - EAN: ${item.ean}`;
-        lista.appendChild(li);
-      }
-      totalSpan.textContent = total.toFixed(2).replace('.', ',');
-    }
-
-    function copiarPedido() {
-      let texto = "Pedido Arte Sedução:\n\n";
-      let total = 0;
-      for (const sku in pedido) {
-        const item = pedido[sku];
-        const subtotal = item.quantidade * item.preco;
-        total += subtotal;
-        texto += `- ${item.quantidade}x [${sku}] ${item.nome}\n  EAN: ${item.ean}\n`;
-      }
-      texto += `\nTotal: R$ ${total.toFixed(2).replace('.', ',')}`;
-      navigator.clipboard.writeText(texto)
-        .then(() => alert("Pedido copiado com sucesso!"))
-        .catch(() => alert("Erro ao copiar pedido."));
-    }
-
-    function filtrarProdutos() {
-      const input = document.getElementById("busca").value.toLowerCase();
-      const produtos = document.querySelectorAll(".produto");
-      produtos.forEach(prod => {
-        const nome = prod.dataset.nome;
-        const sku = prod.dataset.sku;
-        const ean = prod.dataset.ean;
-        if (nome.includes(input) || sku.includes(input) || ean.includes(input)) {
-          prod.style.display = "flex";
-        } else {
-          prod.style.display = "none";
-        }
-      });
-    }
-  </script>
+  });
+}
+</script>
 </body>
 </html>
