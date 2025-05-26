@@ -150,14 +150,22 @@
     @media (max-width: 768px) {
       .produtos {
         grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
+      }
+      .produto {
+        width: 100%;
+        max-width: 210px;
       }
       input[type='number'] {
-        font-size: 16px; /* Evita zoom */
+        font-size: 16px; /* evita zoom no mobile */
       }
       .categoria-titulo {
         grid-column: span 3;
         justify-self: center;
       }
+    }
+    body {
+      overflow-x: hidden;
     }
     </style>
 </head>
