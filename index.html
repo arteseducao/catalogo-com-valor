@@ -146,7 +146,20 @@
       font-weight: bold;
       color: #7d21a8;
     }
-  </style>
+  
+    @media (max-width: 768px) {
+      .produtos {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      input[type='number'] {
+        font-size: 16px; /* Evita zoom */
+      }
+      .categoria-titulo {
+        grid-column: span 3;
+        justify-self: center;
+      }
+    }
+    </style>
 </head>
 <body>
   <div class='container'>
