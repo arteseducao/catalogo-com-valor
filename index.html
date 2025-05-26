@@ -147,21 +147,29 @@
       color: #7d21a8;
     }
   
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
     @media (max-width: 768px) {
       .produtos {
         grid-template-columns: repeat(3, 1fr);
         justify-items: center;
+        padding-inline: 6px;
       }
       .produto {
         width: 100%;
         max-width: 210px;
       }
       input[type='number'] {
-        font-size: 16px; /* evita zoom no mobile */
+        font-size: 16px;
       }
       .categoria-titulo {
         grid-column: span 3;
         justify-self: center;
+      }
+      .container, .interno-catalogo {
+        width: 100%;
+        overflow-x: hidden;
       }
     }
     body {
